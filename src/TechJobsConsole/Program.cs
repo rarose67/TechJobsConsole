@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 
 namespace TechJobsConsole
@@ -63,7 +64,8 @@ namespace TechJobsConsole
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        searchResults = JobData.FindByValue(searchTerm);
+                        PrintJobs(searchResults);
                     }
                     else
                     {
@@ -118,7 +120,23 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("printJobs is not implemented yet");
+            StringBuilder jobOutput = new StringBuilder();
+
+            foreach (Dictionary<string, string> job in someJobs)
+            {
+                // Print job
+                jobOutput.Append("\n*****");
+                foreach (KeyValuePair<string, string> field in job)
+                {
+                    jobOutput.Append("\n" + field.Key + ": " + field.Value);
+                }
+                jobOutput.Append("\n*****");
+                Console.WriteLine(jobOutput);
+
+                jobOutput.Clear();
+            }
+
+            Console.WriteLine("\n" + someJobs.Count + " jobs found.\n");
         }
     }
 }
